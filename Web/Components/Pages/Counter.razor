@@ -51,3 +51,47 @@
         NV.NavigateTo("/addBook");
     }
 }
+
+@* @page "/cars"
+@rendermode InteractiveServer
+@using BusinessLayer
+@using DataLayer.Model
+
+@inject IBusinessCar bus
+
+<PageTitle>Cars</PageTitle>
+<h1>Cars</h1>
+
+@if (Cars != null)
+{
+    <div class="row">
+        @foreach (var item in Cars)
+        {
+            <div class="col-md-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                        <p class="card-text">Year: @item.Year</p>
+                        <p class="card-text">Price: @item.Price €</p>
+                        <button class="btn btn-danger" @onclick="() => Delete(item.Id)">Delete</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<Car>? Cars { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Cars = bus.GetCarsSortedByPrice();
+    }
+
+    private void Delete(int id)
+    {
+        bus.DeleteCar(id);
+        Cars = bus.GetCarsSortedByPrice();
+    }
+} *@
