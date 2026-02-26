@@ -5,3 +5,7 @@ CREATE TABLE [dbo].Books
 	Description nvarchar(50) NOT NULL, 
 	NumberOfPages int NULL
 )
+
+INSERT INTO Cars (Title, Year, Price) VALUES ('BMW X5', 2020, 45000)
+INSERT INTO Cars (Title, Year, Price) VALUES ('Audi A4', 2019, 32000)
+INSERT INTO Cars (Title, Year, Price) VALUES ('Mercedes C200', 2021, 55000)
