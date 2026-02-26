@@ -11,5 +11,8 @@ namespace DataLayer
     {
         bool InsertBook(Book book);
         List<Book> GetAllBooks();
+        bool DeleteCar(int id);        // Delete
+        bool UpdateCar(Car car);       // Update
+        Car? GetCarById(int id);       // GetById
     }
 }
