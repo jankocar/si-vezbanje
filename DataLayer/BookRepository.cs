@@ -50,5 +50,58 @@ namespace DataLayer
                 return result > 0;
             }
         }
+
+       [Obsolete]
+        public bool DeleteCar(int id)
+        {
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                sqlConnection.Open();
+                SqlCommand sqlCommand = sqlConnection.CreateCommand();
+                sqlCommand.CommandText = "DELETE FROM Cars WHERE Id = @Id";
+                sqlCommand.Parameters.AddWithValue("@Id", id);
+                int result = sqlCommand.ExecuteNonQuery();
+                return result > 0;
+            }
+        } 
+
+       [Obsolete]
+        public Car? GetCarById(int id)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Cars WHERE Id = @Id";
+                cmd.Parameters.AddWithValue("@Id", id);
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    Car car = new Car();
+                    car.Id = reader.GetInt32(0);
+                    car.Title = reader.GetString(1);
+                    car.Year = reader.IsDBNull(2) ? null : reader.GetInt32(2);
+                    car.Price = reader.GetDecimal(3);
+                    return car;
+                }
+            }
+            return null;
+        }
+
+       [Obsolete]
+        public bool UpdateCar(Car car)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                cmd.CommandText = "UPDATE Cars SET Title=@Title, Year=@Year, Price=@Price WHERE Id=@Id";
+                cmd.Parameters.AddWithValue("@Title", car.Title);
+                cmd.Parameters.AddWithValue("@Year", (object?)car.Year ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Price", car.Price);
+                cmd.Parameters.AddWithValue("@Id", car.Id);
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        } 
     }
 }
