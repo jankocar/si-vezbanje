@@ -46,6 +46,7 @@ namespace DataLayer
                 sqlCommand.Parameters.AddWithValue("@Title", book.Title);
                 sqlCommand.Parameters.AddWithValue("@Description", book.Description);
                 sqlCommand.Parameters.AddWithValue("@NumberOfPages", book.NumberOfPage);
+                // sqlCommand.Parameters.AddWithValue("@VolumeInMl", (object?)perfume.VolumeInMl ?? DBNull.Value);  AKO JE NULL
                 int result = sqlCommand.ExecuteNonQuery();
                 return result > 0;
             }
