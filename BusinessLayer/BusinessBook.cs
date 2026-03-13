@@ -105,5 +105,16 @@ namespace BusinessLayer
         {
             return carRepository.GetCarById(id);
         }
+        public List<Perfume> GetAllPerfumesWithDiscount()
+        {
+            List<Perfume> perfumes = perfumeRepository.GetAllPerfumes();
+        
+
+            foreach (var p in perfumes)
+            {
+                p.Price = p.Price * 0.9m; 
+            }
+            return perfumes;
+        }
             }
 }
