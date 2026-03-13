@@ -95,3 +95,60 @@
         Cars = bus.GetCarsSortedByPrice();
     }
 } *@
+
+@*<div class="container mt-4">
+    <h3>Odaberi svoj omiljeni parfem</h3>
+
+    <div class="mb-3">
+        <label class="form-label">Lista parfema:</label>
+        
+        <select class="form-select" @bind="odabraniParfemId">
+            
+            <option value="0">-- Molimo odaberite parfem --</option>
+            
+            @if (PerfumesList != null)
+            {
+                @foreach (var p in PerfumesList)
+                {
+                    // value="@p.Id" je ono sto C# pamti, a @p.Name je ono sto korisnik cita!
+                    <option value="@p.Id">@p.Name - @p.Brand (@p.Price din)</option>
+                }
+            }
+        </select>
+    </div>
+
+    <button class="btn btn-primary" @onclick="PrikaziIzbor">Potvrdi izbor</button>
+
+    <p class="mt-3 fw-bold text-success">@poruka</p>
+</div>
+
+@code {
+    // Lista kojom punimo padajući meni
+    private List<Perfume>? PerfumesList { get; set; }
+
+    // OVO JE KLJUČ: Ovde čuvamo ID onog parfema koji je korisnik kliknuo u meniju!
+    private int odabraniParfemId; 
+    
+    private string poruka = "";
+
+    protected override void OnInitialized()
+    {
+        // Punimo listu iz baze cim se stranica ucita
+        PerfumesList = bus.GetAllPerfumes();
+    }
+
+    private void PrikaziIzbor()
+    {
+        // Proveravamo da li je korisnik zaista nesto izabrao ili je ostavio na "-- Odaberite --"
+        if (odabraniParfemId == 0)
+        {
+            poruka = "Morate izabrati parfem iz padajuce liste!";
+        }
+        else
+        {
+            // Ako jeste izabrao, ispisujemo ID. 
+            // Na kolokvijumu bi ovde npr. poslao ovaj ID u bus.DeletePerfume(odabraniParfemId)
+            poruka = $"Uspesno ste odabrali parfem sa ID brojem: {odabraniParfemId}";
+        }
+    }
+}*@
